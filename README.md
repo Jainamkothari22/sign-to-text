@@ -91,6 +91,3 @@ sign-to-text-main/
 
 ---
 
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for details.
