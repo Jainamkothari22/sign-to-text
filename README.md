@@ -90,4 +90,6 @@ sign-to-text-main/
 ```
 
 ---
+## 📜 License
 
+This project is currently unlicensed. All rights reserved.
