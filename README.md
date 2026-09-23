@@ -48,7 +48,7 @@ Real-time **Speech-to-Sign** and **Sign-to-Text** for deaf and hearing-impaired 
 
 ## Tech stack
 
-- **Frontend:** Vanilla JS (ES modules), CSS, HTML  
+- **Frontend:** JS , CSS, HTML  
 - **Backend:** Node.js, Express  
 - **APIs:** Web Speech API, MediaPipe Tasks Vision (Hand Landmarker), rule-based ASL classifier  
 
