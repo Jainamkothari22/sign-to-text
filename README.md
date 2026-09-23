@@ -1,95 +1,85 @@
-# Sign to Text & Speech to Sign Web Application 🤟💬
+# SignBridge
 
-A full-stack Node.js and client-side JavaScript web application that provides bi-directional translation between American Sign Language (ASL) and text/speech.
+Real-time **Speech-to-Sign** and **Sign-to-Text** for deaf and hearing-impaired communication. Built with the Web Speech API, MediaPipe Hands, and a rule-based ASL letter classifier.
 
----
+## Features
 
-## 📌 Features
+- **Speech → Sign (top)**  
+  - Real-time speech recognition (Web Speech API)  
+  - Live waveform from microphone  
+  - Transcribed text + ASL finger-spelling display (letter-by-letter)  
+  - Pause / Stop / Play controls  
 
-* **Sign to Text Translation**: Real-time camera feed processing that translates ASL hand gestures into written text.
-* **Speech to Sign Translation**: Audio input and speech recognition rendered into ASL gesture visualizations/animations.
-* **User Authentication**: User registration and login functionality.
-* **Real-Time Interactive Chat**: Real-time messaging and sign language avatar/display integration.
-* **Visual Waveform Display**: Dynamic audio waveform visualization for audio input streams.
+- **Sign → Text (middle)**  
+  - Webcam hand tracking with MediaPipe Hands  
+  - Bounding boxes and landmarks overlay  
+  - Rule-based ASL letter recognition (A, B, C, D, E, I, K, L, V, W, Y, H, etc.)  
+  - Live text and confidence score  
+  - “Add to chat” to send current spelled word  
 
----
+- **Dual-mode chat (bottom)**  
+  - Left: Speech → Sign messages  
+  - Right: Sign → Text messages  
+  - Copy conversation / Share  
+  - Messages stored via backend API when server is running  
 
-## 🛠️ Tech Stack
+## Setup
 
-* **Backend**: Node.js, Express.js (`server.js`)
-* **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-* **Machine Learning / Computer Vision**: Client-side ASL classification and landmark modeling (`asl-classifier.js`, `asl-model.js`)
-* **Dependencies**: Configured via `package.json`
+1. **Install dependencies**
 
----
+   ```bash
+   npm install
+   ```
 
-## 🚀 Getting Started
+2. **Start the server**
 
-### Prerequisites
+   ```bash
+   npm start
+   ```
 
-* [Node.js](https://nodejs.org/) (v14.x or higher)
-* npm (Node Package Manager)
+3. Open **http://localhost:3000** in a modern browser (Chrome or Edge recommended for Web Speech API and MediaPipe).
 
-### Installation
+## Requirements
 
-1. **Clone the repository:**
-```bash
-git clone https://github.com/your-username/sign-to-text.git
-cd sign-to-text-main
+- **Browser:** Chrome or Edge (for speech recognition and best MediaPipe support).  
+- **HTTPS or localhost** for microphone and camera.  
+- **Microphone** for Speech → Sign.  
+- **Webcam** for Sign → Text.  
 
-```
+## Tech stack
 
+- **Frontend:** Vanilla JS (ES modules), CSS, HTML  
+- **Backend:** Node.js, Express  
+- **APIs:** Web Speech API, MediaPipe Tasks Vision (Hand Landmarker), rule-based ASL classifier  
 
-2. **Install dependencies:**
-```bash
-npm install
-
-```
-
-
-3. **Start the application:**
-```bash
-npm start
-
-```
-
-
-*Alternatively, run `node server.js` directly.*
-4. **Access the web app:**
-Open your browser and navigate to `http://localhost:3000` (or your configured port).
-
----
-
-## 📂 Project Structure
+## Project structure
 
 ```
-sign-to-text-main/
+sign to text/
+├── server.js           # Express server + chat API
+├── package.json
 ├── public/
-│   ├── css/
-│   │   └── styles.css          # Main UI stylesheet
-│   ├── js/
-│   │   ├── app.js              # Application entry point
-│   │   ├── asl-classifier.js   # ASL gesture classification logic
-│   │   ├── asl-display.js     # ASL visual rendering component
-│   │   ├── asl-model.js        # Model pipeline and inference helper
-│   │   ├── auth.js             # Client-side session management
-│   │   ├── chat.js             # Real-time chat & message processing
-│   │   ├── login.js            # Login handling logic
-│   │   ├── register.js         # User registration handling
-│   │   ├── sign-to-text.js     # Video input processing & gesture extraction
-│   │   ├── speech-to-sign.js   # Speech recognition & sign animation mapping
-│   │   └── waveform.js         # Audio visualization handler
-│   ├── index.html              # Main application dashboard
-│   ├── login.html              # Authentication login view
-│   └── register.html           # User signup view
-├── package.json                # Project dependencies & scripts
-├── package-lock.json           # Dependency lockfile
-├── server.js                   # Express server entry point
-└── README.md                   # Project documentation
-
+│   ├── index.html
+│   ├── css/styles.css
+│   └── js/
+│       ├── app.js           # Entry, wires modules
+│       ├── speech-to-sign.js # Web Speech API, transcript, ASL display
+│       ├── waveform.js      # Mic waveform
+│       ├── asl-display.js   # Finger-spelling letters
+│       ├── sign-to-text.js  # MediaPipe + webcam
+│       ├── asl-classifier.js# Rule-based ASL letter classification
+│       └── chat.js          # Dual-mode chat, copy/share, API
+└── README.md
 ```
 
----
-## 📜 License
+## API (backend)
 
-This project is currently unlicensed. All rights reserved.
+- `POST /api/chat/session` – create session, returns `{ sessionId }`  
+- `POST /api/chat/:sessionId/message` – add message `{ type, content, source }`  
+- `GET /api/chat/:sessionId` – get message history  
+
+If the server is not running, chat still works locally (messages shown in UI only).
+
+## License
+
+MIT
